@@ -1,0 +1,147 @@
+a = [[1,2,3,2,3,4],
+    [6,7,8,0,2,3],
+    [6,4,7,4,5,4],
+    [4,5,7,6,5,6],
+    [3,2,3,3,5,4],
+    [6,5,4,6,7,8]]
+
+BM = [[5,0,3,1,3,4], 
+     [6,8,2,0,2,3], 
+     [1,7,2,5,4,5], 
+     [8,3,4,3,3,5],
+     [3,7,9,3,4,9],
+     [4,5,6,34,5,6]]
+
+print("input Matrix A \n \n= {}".format(a))
+print("\ninput Matrix B \n \n= {}".format(BM))
+a1 = []
+for i in a:
+    for j in i:
+        a1.append(j)
+#print(a1)
+        
+A = []
+for j in range(0,len(a1),2):
+    A1 = []
+    for k in range(2):          # making couples
+        c = k+j
+        A1.append(a1[c])
+    A.append(A1)
+#print(A)
+
+    
+c = int(len(a[0])/2)
+index = []
+g = 0
+for i in range(0,int(len(a1)/2),c):
+    if g%2==0:
+        d = i
+        for j in range(c):
+            index.append(d)
+            d = d+1
+    g = g+1
+
+index.sort()
+#print(index)
+    
+    
+original_A = []
+for n in index:
+    A1 = []
+    for m in range(n,int(len(a1)/2),int(len(a)/2)):
+        A1.append(A[m])
+        if len(A1) >= 2:break
+    original_A.append(A1)
+print("\nMakes Threads of Matrix A  \n\n= {}".format(original_A))
+print()
+
+
+
+b1 = []
+for i in BM:
+    for j in i:
+        b1.append(j)
+        
+B = []
+for j in range(0,len(b1),2):
+    B1 = []
+    for k in range(2):          # making couples
+        c = k+j
+        B1.append(b1[c])
+    B.append(B1)
+
+    
+e = int(len(BM[0])/2)
+
+Bindex = []
+f = 0
+for i in range(0,int(len(b1)/2),e):
+    if f%2 == 0:
+        d = i
+        for j in range(e):
+            Bindex.append(d)
+            d = d+1
+    f = f+1
+
+Bindex.sort()
+#print(Bindex)    
+    
+original_B = []
+for n in Bindex:
+    B1 = []
+    for m in range(n,int(len(b1)/2),int(len(BM)/2)):
+        B1.append(B[m])
+        if len(B1) >= 2:break
+    original_B.append(B1)
+print("\nMake Threads of Matrix B  \n\n= {}".format(original_B))
+print()
+
+
+
+D = []
+for i in range(len(original_A)):  
+    x = []
+    for j in range(len(original_A[0])):
+        y = []
+        for k in range(len(original_A[0][0])):
+            v = 0
+            for l in range(len(original_A[0][0])):
+                v += original_A[i][j][l]*original_A[i][l][k]
+            y.append(v)
+        x.append(y)
+    D.append(x)
+print("\n Multiplication \n\n= {}".format(D))
+print()
+
+E =[]
+for o in D:
+    for p in o:
+        #for q in p:
+        E.append(p)
+#print(E)
+
+
+C = []
+
+for c2 in range(0,len(E),int(len(a))):
+    breaks = []
+    for c3 in range(c2,len(E)):
+        breaks.append(E[c3])
+        if len(breaks) >= len(a):break
+    part1 = []
+    part2 = []
+    for c4 in range(0,len(breaks),2):
+        part1.append(E[c4])
+    for c5 in range(1,len(breaks),2):
+        part2.append(E[c5])
+    C.append(part1)
+    C.append(part2)
+leng = len(C)
+original_C = []
+for c6 in range(0,leng):
+    C1 = []
+    for c7 in C[c6]:
+        for c8 in c7:
+            C1.append(c8)
+    original_C.append(C1)
+print("Shared Memory setting in Matrix C \n\n= {}".format(original_C))
